@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>陈思全的博客</title>
+  <link rel="stylesheet" href="./lib/index.css">
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="leftnav">
+    <div class="mobile">
+      <button onclick="hideMenu()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+          <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+        </svg>
+      </button>
+    </div>
+    <div class="pc">
+      <img src="./favicon.ico" alt="">
+      <p class="title">陈思全的博客</p>
+    </div>
+
+    <div class="menu">
+      <div class="searchbox">
+        <input type="text" placeholder="在博客中搜索(即将上线)">
+        <button>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+          </svg>
+        </button>
+      </div>
+      <ul>
+        <li class="index"><a href="#/index">博客首页</a></li>
+        <li class="post"><a href="#/post">文章</a></li>
+        <li class="t"><a href="#/t">动态</a></li>
+        <li class="tag"><a href="#/tag">分类</a></li>
+        <li class="archive"><a href="#/archive">归档</a></li>
+        <li class=""><a href="https://siquan001.github.io/">关于我</a></li>
+        <li class="friends"><a href="#/friends">我的小伙伴们</a></li>
+        <li class="callme"><a href="#/callme">留言</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="rightcontent">
+    <div class="mobile">
+      <div class="top">
+        <button onclick="showMenu()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+        </svg></button>
+        <img src="./favicon.ico" alt="">
+        <p class="title">陈思全的博客</p>
+      </div>
+    </div>
+    <div class="page">
+      <div class="index"></div>
+      <div class="post"></div>
+      <div class="t"></div>
+      <div class="tag"></div>
+      <div class="archive"></div>
+      <div class="friends"></div>
+      <div class="callme"></div>
+      <div class="post_inner"></div>
+      <div class="t_inner"></div>
+      <div class="tag_inner"></div>
+      <div class="search_inner"></div>
+      <div class="err"></div>
+    </div>
+    <div class="footer">
+      <div class="about">
+        <h2>关于本站</h2>
+        <p></p>
+      </div>
+      <div class="from">
+        <h2>一些内容来源于</h2>
+        <ul></ul>
+      </div>
+      <div class="friendlink">
+        <h2>友情链接</h2>
+        <ul></ul>
+      </div>
+    </div>
+    <div class="tj" style="font-size: 12px;color:#666;line-height:30px;text-align:center;">
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> | 
+      <span id="busuanzi_container_site_uv">本站总访问人数<span id="busuanzi_value_site_uv"></span>人</span>
+    </div>
+  </div>
+  <div class="backtop">
+    <img src="./lib/backTop.png" alt="">
+  </div>
+</body>
+<script src="./lib/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</html>
