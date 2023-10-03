@@ -784,3 +784,23 @@ body{
 .backtop img{
   width: 100%;
 }
+.loading_page{
+  width: 100%;
+  height: 100vh;
+}
+.loading_fh{
+  margin: 20px auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  border-top: #000 solid 2px;
+  animation: r 1s linear infinite;
+}
+
+@keyframes r {
+  0%{
+    transform: rotate(0deg);
+  }100%{
+    transform: rotate(360deg);
+  }
+}
