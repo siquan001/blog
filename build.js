@@ -119,7 +119,7 @@ function chulipost() {
     fs.writeFileSync(path.join(__dirname, 'post_comment', i + '.json'), JSON.stringify(ob));
   }
 
-  console.log('[BUILD] updated topper post comment ...');
+  console.log('[BUILD] updating topper post comment ...');
   let topperob = [];
   for (var i = 0; i < Math.min(allpost.length, config.post.toppershowcount); i++) {
     topperob.push(allpost[i]);
@@ -150,6 +150,8 @@ function chulipost() {
 chulipost();
 
 function chulit(){
+  console.log('[BUILD] geting all t and sort...');
+
   var allt=[];
   var alltcontent={};
   let ts = fs.readdirSync(path.join(__dirname, '/source/ts'));
@@ -169,7 +171,7 @@ function chulit(){
 
   allt.sort((a, b) => {
     var ad = new Date(a.time).getTime();
-    var bd = new Date(a.time).getTime();
+    var bd = new Date(b.time).getTime();
     var aq = !!a.top, bq = !!b.top;
     if (aq && !bq) {
       return 1;
@@ -180,32 +182,43 @@ function chulit(){
     }
   })
 
+  console.log('[BUILD] writing all_t.json...');
+
   fs.writeFileSync(path.join(__dirname, 'all_t.json'), JSON.stringify(allt));
+  console.log('[BUILD] updating ts...');
 
   for (let id in alltcontent) {
     try {
       var yc = fs.readFileSync(path.join(__dirname, 'ts', id + '.md'));
       yc = yc.toString();
       if (yc != alltcontent[id]) {
-        fs.writeFileSync(path.join(__dirname, 'ts', id + '.md'), alltcontent[id])
+        fs.writeFileSync(path.join(__dirname, 'ts', id + '.md'), alltcontent[id]);
+        console.log('[BUILD] updated t '+id+'.md');
         fs.writeFileSync(path.join(__dirname, 'ts', id + '.html'), marked.parse(alltcontent[id]))
+        console.log('[BUILD] updated t '+id+'.html');
       }
     } catch (e) {
       fs.writeFileSync(path.join(__dirname, 'ts', id + '.md'), alltcontent[id])
+      console.log('[BUILD] created t '+id+'.md');
       fs.writeFileSync(path.join(__dirname, 'ts', id + '.html'), marked.parse(alltcontent[id]))
+      console.log('[BUILD] created t '+id+'.html');
     }
   }
-
+  console.log('[BUILD] updating t json ...');
   allt.forEach(function(item){
     fs.writeFileSync(path.join(__dirname, 'ts', item.id + '.json'), JSON.stringify(item));
   })
 
+  console.log('[BUILD] updating t comment ...');
+  console.log('[BUILD] unlinking old t comment ...');
 
   fs.readdirSync(path.join(__dirname, 't_comment')).forEach(function (item) {
     fs.unlinkSync(path.join(__dirname, 't_comment', item));
   });
 
   let t_page_total = Math.floor(allt.length / config.t.pageshowcount) + 1;
+  console.log('[BUILD] creating new t comment ...');
+  console.log('[BUILD] t comment total:'+t_page_total);
 
   for (var i = 0; i < t_page_total; i++) {
     let ob = {
@@ -217,12 +230,14 @@ function chulit(){
     }
     fs.writeFileSync(path.join(__dirname, 't_comment', i + '.json'), JSON.stringify(ob));
   }
+  console.log('[BUILD] updating topper t comment ...');
 
   let topperob = [];
   for (var i = 0; i < Math.min(allt.length, config.t.toppershowcount); i++) {
     topperob.push(allt[i]);
   }
   fs.writeFileSync(path.join(__dirname, 'topper_t.json'), JSON.stringify(topperob));
+  console.log('[BUILD] END');
 }
 
 chulit();
