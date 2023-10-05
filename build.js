@@ -105,8 +105,8 @@ function chulipost() {
   });
   
   console.log('[BUILD] creating new post comment ...');
-  console.log('[BUILD] post comment total:'+post_page_total);
   let post_page_total = Math.floor(allpost.length / config.post.pageshowcount) + 1;
+  console.log('[BUILD] post comment total:'+post_page_total);
 
   for (var i = 0; i < post_page_total; i++) {
     let ob = {
