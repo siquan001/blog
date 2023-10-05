@@ -153,6 +153,10 @@ body{
   width: calc(100% - 20px);
   margin: 5px 10px;
   height: 30px;
+  position: absolute;
+  top:10px;
+  left:10px;
+  z-index:8;
 }
 .rightcontent .top>*{
   float: left;
@@ -343,6 +347,11 @@ body{
   font-size: 18px;
   font-weight: bold;
   line-height: 20px;
+  height: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 .page .index .container .list ul li .m .p_desc{
   text-indent: 2em;
@@ -431,6 +440,11 @@ body{
   font-size: 20px;
   font-weight: bold;
   line-height: 30px;
+  height: 30px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 .postlist li .m .p_desc{
   text-indent: 2em;
@@ -464,43 +478,37 @@ body{
   font-size: 12px;
   line-height: 20px;
 }
-.post_inner .mb,
-.post_inner .mb .c{
+.post_inner .mb{
   width: 100%;
-  height: 200px;
+  height: 0px;
   overflow: hidden;
   background-color: #444;
-  color: #fff;
-  position: relative;
-}
-.post_inner .mb .c{
   position: absolute;
   top:0;
   left:0;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
-.post_inner .mb .c .cover{
-  width: 100%;
-  height: 100%;
+.post_inner .mb img{
   object-fit: cover;
   object-position: center center;
-  opacity: .6;
-  filter: blur(4px);
-  transition: all .3s;
+  opacity: .5;
+  filter: blur(5px);
+  width: 100%;
+  height: 100%;
 }
-.post_inner .mb:hover .cover{
-  filter: none;
+.post_inner .d{
+  padding: 20px;
+  padding-top: 100px;
+  overflow: hidden;
+  backdrop-filter: opacity(.5);
+  color: #fff;
 }
-.post_inner .mb .d{
-  position: absolute;
-  bottom:0;
-  left:0;
-  padding: 10px;
-}
-.post_inner .mb .d h1{
+.post_inner .d h1{
   font-size: 36px;
   font-weight: 500;
 }
-.post_inner .mb .d .tags a{
+.post_inner .d .tags a{
   float: left;
   color: #444;
   background-color: #eee;
@@ -511,7 +519,7 @@ body{
   font-size: 12px;
   line-height: 20px;
 }
-.post_inner .mb .d .tags a:hover{
+.post_inner .d .tags a:hover{
   background-color: #444;
   color: #eee;
 }
@@ -533,6 +541,9 @@ body{
   position: absolute;
   top: 15px;
   left: -15px;
+}
+.mdcontent img{
+  max-width: 100%;
 }
 .mdcontent h2{
   font-size: 30px;
@@ -617,6 +628,7 @@ body{
     height: calc(100% - 30px);
     left:5px;
     top:5px;
+    padding-top: 40px;
   }
   .leftnav {
     width: calc(100% - 20px);
@@ -626,7 +638,7 @@ body{
     left:calc(-100% + 20px);
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
-    z-index:2;
+    z-index:10;
     box-shadow: #aaa 1px 0 13px;
     transition: all .3s;
   }
