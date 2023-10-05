@@ -1,6 +1,7 @@
 ---
 title: VSCode插件推荐 —— CodeGeeX ，免费的智能代码补全工具
 time: 2023-10-4 18:58:52
+cover: https://z1.ax1x.com/2023/10/04/pPOhtXD.png
 id: 1
 desc: CodeGeeX是一个免费的智能代码补全工具，功能类似Copilot，但支持中文！
 tags:
