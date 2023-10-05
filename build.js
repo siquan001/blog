@@ -51,14 +51,14 @@ function chulipost() {
 
   allpost.sort((a, b) => {
     var ad = new Date(a.time).getTime();
-    var bd = new Date(a.time).getTime();
+    var bd = new Date(b.time).getTime();
     var aq = !!a.top, bq = !!b.top;
     if (aq && !bq) {
       return 1;
     } else if (!aq && bq) {
       return -1;
     } else {
-      return ad - bd;
+      return bd - ad;
     }
   })
 
