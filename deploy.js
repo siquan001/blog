@@ -1,7 +1,13 @@
 // nodejs执行git add
 const shell = require('shelljs');
-const alwaysBuild=true;
 
+let alwaysBuild=true;
+
+process.argv.forEach(function(val,index){
+  if(val=='nobuild'){
+    alwaysBuild=false;
+  }
+});
 if(alwaysBuild){
   shell.exec('node build.js');
 }

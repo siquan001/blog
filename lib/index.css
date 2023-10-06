@@ -606,7 +606,6 @@ body{
     height: calc(100% - 30px);
     left:5px;
     top:5px;
-    padding-top: 40px;
   }
   .leftnav {
     width: calc(100% - 20px);
