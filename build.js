@@ -178,7 +178,7 @@ function chulit(){
     } else if (!aq && bq) {
       return -1;
     } else {
-      return ad - bd;
+      return bd - ad;
     }
   })
 
