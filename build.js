@@ -163,7 +163,7 @@ function chulit(){
       let info = (/---(.*?)---/sg).exec(content)[1];
       info = jsyaml.load(info);
       content = content.replace(/---(.*?)---/sg, '');
-      info.desc=content.substring(0,50);
+      info.desc=content.substring(0,200);
       allt.push(info);
       alltcontent[info.id] = content;
     }
