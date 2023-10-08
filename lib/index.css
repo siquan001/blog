@@ -633,6 +633,12 @@ body{
     width: calc(100% - 20px);
     margin: 5px;
   }
+  .postlist li img{
+    display: none;
+  }
+  .postlist li .m{
+    width: calc(100% - 20px);
+  }
 }
 .page>.tag h1,
 .page>.tag_inner h1,
