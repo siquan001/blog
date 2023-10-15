@@ -1,6 +1,6 @@
 ---
 title: Fh音乐更新Beta版本
-time: 2023-10-02 14:54:02
+time: 2023-10-15 11:19:50
 id: 2
 desc: Fh音乐项目是我之前写的爬取酷狗音乐音乐的音乐工具，这次Fh音乐更新Beta版本。主要更新如下：
 cover: https://z1.ax1x.com/2023/10/15/pi9NiOs.png
