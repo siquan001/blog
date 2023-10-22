@@ -18,7 +18,7 @@ tags:
 }
 
 function t(){
-  fs.writeFileSync(path.join(__dirname,'/source/ts',new Date().toLocaleString()+'.md'),`---
+  fs.writeFileSync(path.join(__dirname,'/source/ts',new Date().toLocaleString().replaceAll('/','').replaceAll(':','').replaceAll(' ','')+'.md'),`---
 time: ${
   new Date().toLocaleString()
 }
