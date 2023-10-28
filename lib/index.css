@@ -473,3 +473,11 @@ ul.postlist li h1 a:hover{
     transform: scale(1);
   }
 }
+.end{
+  text-align: center;
+  font-family: Consolas;
+  font-size: 20px;
+  font-style: italic;
+  color: #888;
+  margin: 20px 0;
+}

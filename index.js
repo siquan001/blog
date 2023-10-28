@@ -1,10 +1,13 @@
 var blog={
-  _get:function(url,cb){
+  _get:function(url,cb,err){
     var xhr=new XMLHttpRequest();
     xhr.open('GET',url,true);
     xhr.onreadystatechange=function(){
       if(xhr.readyState==4&&xhr.status==200){
         cb(xhr.responseText);
+      }
+      if(xhr.status>400){
+        err(xhr.status);
       }
     }
     xhr.send();
@@ -45,11 +48,11 @@ var blog={
       cb(JSON.parse(res));
     })
   },
-  getPostDetails:function(id,cb){
+  getPostDetails:function(id,cb,err){
     var url='./datas/post_'+id+'.json';
     this._get(url,function(res){
       cb(JSON.parse(res));
-    })
+    },err)
   },
   getPostContent:function(id,cb){
     var url='./datas/post_'+id+'.html';
@@ -57,11 +60,11 @@ var blog={
       cb(res);
     })
   },
-  getTDetails:function(id,cb){
+  getTDetails:function(id,cb,err){
     var url='./datas/t_'+id+'.json';
     this._get(url,function(res){
       cb(JSON.parse(res));
-    })
+    },err)
   },
   getTContent:function(id,cb){
     var url='./datas/t_'+id+'.html';
@@ -208,6 +211,12 @@ var hashTokenize=[
           if(sTate.tc.id==id){
             document.querySelector(".page.tc>.date .date_con").innerHTML=new Date(res.time.substring(0,res.time.length-2)+'+0800').toLocaleString();
           }
+        },function(){
+          document.querySelectorAll(".page").forEach(function(a){
+            a.style.display='';
+          })
+          document.querySelector(".page.a404").style.display='block';
+
         })
       }
     }
@@ -280,6 +289,12 @@ var hashTokenize=[
             })(res.tags);
             document.querySelector(".page.post>.date .date_con").innerHTML=new Date(res.time.substring(0,res.time.length-2)+'+0800').toLocaleString();
           }
+        },function(d){
+          sTate.post=null;
+          document.querySelectorAll(".page").forEach(function(a){
+            a.style.display='';
+          })
+          document.querySelector(".page.a404").style.display='block';
         })
       }
     }
@@ -397,8 +412,7 @@ function clhash(){
     }
   }
   if(!ab){
-    alert(404);
-    window.location.hash='#/'
+    document.querySelector(".page.a404").style.display='block';
   }
 }
 
