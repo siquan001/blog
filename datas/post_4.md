@@ -95,7 +95,7 @@ var nowDir=[0,0];
 // 游戏状态 0:未开始 1：进行中 2：结束
 var STATE=0;
 
-var interval;
+var inter;
 
 function _resize(){
   var wh=Math.min(window.innerWidth,window.innerHeight);
@@ -232,4 +232,5 @@ function checkDirCorrect(dir){
 ```
 
 可以当作参考，希望可以帮助到你。
-  
+预览链接：<https://jsrun.net/vBGKp/embedded/all/light>
+视频：[BV16c411i7cK](https://www.bilibili.com/video/BV16c411i7cK/)
