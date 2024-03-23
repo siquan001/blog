@@ -1,8 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const jsyaml = require('js-yaml');
-console.log('a');
-const Marked = require('./marked.js');
+const {Marked} = require('marked');
 const hljs=require('highlight.js');
 const {markedHighlight}=require('marked-highlight');
 

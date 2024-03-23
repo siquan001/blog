@@ -2,7 +2,8 @@
   "dependencies": {
     "highlight.js": "^11.8.0",
     "js-yaml": "^4.1.0",
-    "marked-highlight": "^2.0.6",
+    "marked": "^12.0.1",
+    "marked-highlight": "^2.1.1",
     "shelljs": "^0.8.5"
   }
 }
