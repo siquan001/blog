@@ -5,6 +5,7 @@ id: 3
 desc: js-URL()的使用注意事项
 tags:
   - JS
+  - 开发笔记
 ---
   
 `URL`是js用于处理url的一个原生API，提供了很多实用的方法。
