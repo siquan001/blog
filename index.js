@@ -377,7 +377,7 @@ var hashTokenize=[
 ];
 
 function clhash(){
-  console.log('clhash');
+  window.scrollTo(0,0);
   if(window.location.hash==''){
     location.hash='#/';
     return;
