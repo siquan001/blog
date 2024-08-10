@@ -3,7 +3,7 @@
 <p>但我可是有着从未在网络上用一分钱购买任何虚拟产品的纪录的，于是我就想，我可不可以自己做一个epub解析器</p>
 <h2>思路</h2>
 <p>我从Z-library下载的epub电子书是application/epub+zip格式，首先我需要把它解压，目录大概是这样：</p>
-<pre><code>images/
+<pre><code class="hljs">images/
 - 00001.jpeg
 - 00002.jpeg
 - ...
@@ -19,15 +19,14 @@ mimetype
 page_styles.css
 stylesheet.css
 titlepage.xhtml
-toc.ncx
-</code></pre><p>epub的所有资源的索引就在content.opf(xml)里，同时也包括这本电子书的名字、作者、出版社、封面等信息</p>
+toc.ncx</code></pre><p>epub的所有资源的索引就在content.opf(xml)里，同时也包括这本电子书的名字、作者、出版社、封面等信息</p>
 <p>toc.ncx(xml)放的是目录</p>
 <p>文字内容是html的形式，正好方便了解析查看。</p>
 <p>所以我们只需解压epub然后读取content.opf建立文件索引，然后读取toc.ncx目录，之后再渲染到网页上就可以了。</p>
 <h2>实现</h2>
 <h3>解压</h3>
 <p>解压我用的是zip.js</p>
-<pre><code class="hljs language-javascript"><span class="hljs-keyword">var</span> epubblob=inputfile.<span class="hljs-property">files</span>[<span class="hljs-number">0</span>];
+<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> epubblob=inputfile.<span class="hljs-property">files</span>[<span class="hljs-number">0</span>];
 <span class="hljs-keyword">var</span> reader=<span class="hljs-keyword">new</span> zip.<span class="hljs-title class_">ZipReader</span>(<span class="hljs-keyword">new</span> zip.<span class="hljs-title class_">BlobReader</span>(epubblob));
 <span class="hljs-keyword">var</span> entries = <span class="hljs-keyword">await</span> reader.<span class="hljs-title function_">getEntries</span>()
 <span class="hljs-comment">/*
@@ -37,9 +36,8 @@ toc.ncx
     getData:Function
   }
 ]
- */</span>
-</code></pre><h3>解析 content.opf</h3>
-<pre><code class="hljs language-javascript">  <span class="hljs-keyword">function</span> <span class="hljs-title function_">getFile</span>(<span class="hljs-params">entries,path</span>){
+ */</span></code></pre><h3>解析 content.opf</h3>
+<pre><code class="hljs hljs-javascript">  <span class="hljs-keyword">function</span> <span class="hljs-title function_">getFile</span>(<span class="hljs-params">entries,path</span>){
       <span class="hljs-keyword">return</span> entries.<span class="hljs-title function_">find</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">entry</span>){
             <span class="hljs-keyword">return</span> entry.<span class="hljs-property">filename</span>==path
         })
@@ -97,9 +95,8 @@ toc.ncx
       <span class="hljs-attr">itemObj</span>:itemObj,
       <span class="hljs-attr">cover</span>:itemObj[cover],
       <span class="hljs-attr">titlepage</span>:titlepage
-  };
-</code></pre><h3>解析toc.ncx</h3>
-<pre><code class="hljs language-javascript"><span class="hljs-keyword">var</span> xml=<span class="hljs-keyword">await</span> entries.<span class="hljs-title function_">find</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">entry</span>){
+  };</code></pre><h3>解析toc.ncx</h3>
+<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> xml=<span class="hljs-keyword">await</span> entries.<span class="hljs-title function_">find</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">entry</span>){
     <span class="hljs-keyword">return</span> entry.<span class="hljs-property">filename</span>==<span class="hljs-string">&#x27;toc.ncx&#x27;</span>;
 }).<span class="hljs-title function_">getData</span>(<span class="hljs-keyword">new</span> zip.<span class="hljs-title class_">TextWriter</span>());
 
@@ -138,15 +135,13 @@ toc.ncx
       <span class="hljs-keyword">return</span> toc;
 }
 
-epubData.<span class="hljs-property">toc</span>=<span class="hljs-title function_">g</span>(navmap.<span class="hljs-property">childNodes</span>);
-</code></pre><h3>渲染</h3>
+epubData.<span class="hljs-property">toc</span>=<span class="hljs-title function_">g</span>(navmap.<span class="hljs-property">childNodes</span>);</code></pre><h3>渲染</h3>
 <p>做一个container</p>
-<pre><code class="hljs language-javascript"><span class="hljs-keyword">var</span> epubContainer=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&#x27;div&#x27;</span>);
+<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> epubContainer=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&#x27;div&#x27;</span>);
 epubContainer.<span class="hljs-property">className</span>=<span class="hljs-string">&#x27;epub-container&#x27;</span>;
 epubContainer.<span class="hljs-property">innerHTML</span>=<span class="hljs-string">&#x27;&lt;div class=&quot;epub-toc&quot;&gt;&lt;div class=&quot;epub-toc-list&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;epub-content&quot;&gt;&lt;/div&gt;&#x27;</span>;
-<span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-title function_">appendChild</span>(epubContainer);
-</code></pre><p>渲染目录</p>
-<pre><code class="hljs language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">gtoc</span>(<span class="hljs-params">n,r</span>){
+<span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-title function_">appendChild</span>(epubContainer);</code></pre><p>渲染目录</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">gtoc</span>(<span class="hljs-params">n,r</span>){
   r.<span class="hljs-title function_">forEach</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>){
       <span class="hljs-keyword">var</span> a=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&#x27;div&#x27;</span>);
       a.<span class="hljs-property">classList</span>.<span class="hljs-title function_">add</span>(<span class="hljs-string">&#x27;epub-toc-item&#x27;</span>);
@@ -172,9 +167,8 @@ epubContainer.<span class="hljs-property">innerHTML</span>=<span class="hljs-str
   })
 }
 <span class="hljs-comment">// 遍历渲染目录</span>
-<span class="hljs-title function_">gtoc</span>(epubContainer.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.epub-toc-list&#x27;</span>),epubData.<span class="hljs-property">toc</span>);
-</code></pre><p>渲染内容</p>
-<pre><code class="hljs language-javascript"><span class="hljs-variable language_">window</span>.<span class="hljs-property">epubNowShow</span>=<span class="hljs-literal">null</span>;
+<span class="hljs-title function_">gtoc</span>(epubContainer.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.epub-toc-list&#x27;</span>),epubData.<span class="hljs-property">toc</span>);</code></pre><p>渲染内容</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-variable language_">window</span>.<span class="hljs-property">epubNowShow</span>=<span class="hljs-literal">null</span>;
 <span class="hljs-keyword">function</span> <span class="hljs-title function_">view</span>(<span class="hljs-params">t,i</span>){
   <span class="hljs-keyword">if</span>(<span class="hljs-variable language_">window</span>.<span class="hljs-property">epubNowShow</span>!=t){
       <span class="hljs-keyword">var</span> html=epubData.<span class="hljs-property">itemObj</span>[t];
@@ -223,10 +217,9 @@ o.<span class="hljs-property">innerHTML</span>=<span class="hljs-string">`&lt;di
   &lt;p class=&quot;title&quot;&gt;<span class="hljs-subst">${epubData.title}</span>&lt;/p&gt;
   &lt;p class=&quot;writer&quot;&gt;<span class="hljs-subst">${epubData.writer}</span>&lt;/p&gt;
   &lt;p class=&quot;publisher&quot;&gt;<span class="hljs-subst">${epubData.publisher}</span>&lt;/p&gt;
-&lt;/div&gt;`</span>
-</code></pre><h2>封装</h2>
+&lt;/div&gt;`</span></code></pre><h2>封装</h2>
 <p>把所有代码封装到一起：</p>
-<pre><code class="hljs language-javascript"><span class="hljs-keyword">var</span> epubjs = {
+<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> epubjs = {
     <span class="hljs-attr">view</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params">res</span>){
         <span class="hljs-variable language_">window</span>.<span class="hljs-property">epubNowShow</span>=<span class="hljs-literal">null</span>;
         <span class="hljs-keyword">var</span> epubContainer=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&#x27;div&#x27;</span>);
@@ -405,9 +398,8 @@ o.<span class="hljs-property">innerHTML</span>=<span class="hljs-string">`&lt;di
             epubjs.<span class="hljs-title function_">view</span>(res);
         })
     }
-}
-</code></pre><p>再写一下CSS:</p>
-<pre><code class="hljs language-css"><span class="hljs-selector-tag">body</span>{
+}</code></pre><p>再写一下CSS:</p>
+<pre><code class="hljs hljs-css"><span class="hljs-selector-tag">body</span>{
     <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>;
     <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span>;
 }
@@ -470,8 +462,7 @@ o.<span class="hljs-property">innerHTML</span>=<span class="hljs-string">`&lt;di
 <span class="hljs-selector-class">.epub-container</span> <span class="hljs-selector-class">.epub-content</span> <span class="hljs-selector-class">.epub_info_show</span> <span class="hljs-selector-tag">p</span><span class="hljs-selector-class">.publisher</span>{
     <span class="hljs-attribute">font-size</span>: <span class="hljs-number">14px</span>;
     <span class="hljs-attribute">color</span>: <span class="hljs-number">#aaa</span>;
-}
-</code></pre><p>大功告成！</p>
+}</code></pre><p>大功告成！</p>
 <p><img src="https://s21.ax1x.com/2024/03/23/pFhfPAS.png" alt="pFhfPAS.png">
 <img src="https://s21.ax1x.com/2024/03/23/pFhfFhQ.png" alt="pFhfFhQ.png"></p>
 <h2>总结</h2>

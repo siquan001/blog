@@ -1,6 +1,6 @@
 <p>最近用canvas做了一个贪吃蛇，总的来说算比较简单，但是要考虑的点还是很多的。</p>
 <p>话不多说，直接上源码：</p>
-<pre><code class="hljs language-html"><span class="hljs-comment">&lt;!-- index.html --&gt;</span>
+<pre><code class="hljs hljs-html"><span class="hljs-comment">&lt;!-- index.html --&gt;</span>
 
 <span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;zh-CN&quot;</span>&gt;</span>
@@ -58,8 +58,7 @@
   <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;./index.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
-</code></pre><pre><code class="hljs language-javascript"><span class="hljs-comment">// index.js</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></code></pre><pre><code class="hljs hljs-javascript"><span class="hljs-comment">// index.js</span>
 
 <span class="hljs-keyword">var</span> canvas=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;canvas&#x27;</span>);
 <span class="hljs-keyword">var</span> ctx=canvas.<span class="hljs-title function_">getContext</span>(<span class="hljs-string">&#x27;2d&#x27;</span>);
@@ -220,7 +219,6 @@ food=<span class="hljs-title function_">getNewFood</span>();
     }
   }
   <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
-}
-</code></pre><p>可以当作参考，希望可以帮助到你。
+}</code></pre><p>可以当作参考，希望可以帮助到你。
 预览链接：<a href="https://jsrun.net/vBGKp/embedded/all/light">https://jsrun.net/vBGKp/embedded/all/light</a>
 视频：<a href="https://www.bilibili.com/video/BV16c411i7cK/">BV16c411i7cK</a></p>

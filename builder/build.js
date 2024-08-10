@@ -1,22 +1,25 @@
 const fs = require('fs');
 const path = require('path');
 const jsyaml = require('js-yaml');
-const {Marked} = require('marked');
-const hljs=require('highlight.js');
-const {markedHighlight}=require('marked-highlight');
+const marked = require('./marked.js');
+const hljs=require('../node_modules/highlight.js');
 
 __dirname=path.join(__dirname,'../');
 
-const marked=new Marked(
-  markedHighlight({
-    langPrefix: 'hljs language-',
-    highlight(code, lang) {
-      const language = hljs.getLanguage(lang) ? lang : 'plaintext';
-      return hljs.highlight(code, { language }).value;
-    }
-  })
-)
-
+const renderer = {
+  code(code, infostring, escaped){
+      if(infostring){
+          return `<pre><code class="hljs hljs-${infostring}">${hljs.highlight(code,{
+              language:infostring
+          }).value}</code></pre>`
+      }else{
+          return `<pre><code class="hljs">${code}</code></pre>`
+      }
+  }
+}
+marked.use({
+  renderer
+})
 let config={};
 
 let count={
