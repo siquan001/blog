@@ -309,7 +309,7 @@ var hashTokenize=[
           var data=JSON.parse(res);
           var str='';
           data.forEach(function(item){
-            str+='<li><a href="'+item.url+'" target="_blank"><img src="'+item.icon+'"/><div class="m"><div class="title">'+item.title+'</div><div class="desc">'+item.desc+'</div></div></a></li>';
+            str+='<li><a '+(item.type=='?'?'class="no" title="链接可能无法访问"':'')+' href="'+item.url+'" target="_blank"><img src="'+item.icon+'"/><div class="m"><div class="title">'+item.title+'</div><div class="desc">'+item.desc+'</div></div></a></li>';
           });
           document.querySelector('.friendlinks').innerHTML=str;
         })

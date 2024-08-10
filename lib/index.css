@@ -365,6 +365,9 @@ ul.postlist li h1 a:hover{
   width: 100%;
   overflow: hidden;
 }
+.friendlinks li a.no{
+  opacity: 0.5;
+}
 .friendlinks li img{
   float: left;
   width: 40px;
