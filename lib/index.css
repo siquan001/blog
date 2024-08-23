@@ -484,3 +484,15 @@ ul.postlist li h1 a:hover{
   color: #888;
   margin: 20px 0;
 }
+
+.moebeian{
+  color: #888;
+}
+.moebeian a{
+  color: #fa4bc5;
+  font-weight: 600;
+  text-decoration: none;
+}
+.moebeian a:hover{
+  color: #ad037a;
+}
