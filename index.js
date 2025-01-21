@@ -1,433 +1,310 @@
-var blog={
-  _get:function(url,cb,err){
-    var xhr=new XMLHttpRequest();
-    xhr.open('GET',url,true);
-    xhr.onreadystatechange=function(){
-      if(xhr.readyState==4&&xhr.status==200){
-        cb(xhr.responseText);
-      }
-      if(xhr.status>400){
-        err(xhr.status);
-      }
+function resizeWindow() {
+    function resize() {
+        var windowHeight = window.innerHeight;
+        var windowWidth = window.innerWidth;
+        document.body.style.height = windowHeight + "px";
+        document.body.style.width = windowWidth + "px";
     }
-    xhr.send();
-  },
-  getPostListByPage:function(page,cb){
-    var url='./datas/post_comment_'+page+'.json';
-    this._get(url,function(res){
-      cb(JSON.parse(res));
-    })
-  },
-  getPostListByTag:function(tag,cb){
-    var url='./datas/tag_'+tag+'.json';
-    this._get(url,function(res){
-      cb(JSON.parse(res));
-    })
-  },
-  getAllPostList:function(cb){
-    var url='./datas/all_posts.json';
-    this._get(url,function(res){
-      cb(JSON.parse(res));
-    })
-  },
-  getTListByPage:function(page,cb){
-    var url='./datas/t_comment_'+page+'.json';
-    this._get(url,function(res){
-      cb(JSON.parse(res));
-    })
-  },
-  getAllTList:function(cb){
-    var url='./datas/all_t.json';
-    this._get(url,function(res){
-      cb(JSON.parse(res));
-    })
-  },
-  getTagList:function(cb){
-    var url='./datas/tags.json';
-    this._get(url,function(res){
-      cb(JSON.parse(res));
-    })
-  },
-  getPostDetails:function(id,cb,err){
-    var url='./datas/post_'+id+'.json';
-    this._get(url,function(res){
-      cb(JSON.parse(res));
-    },err)
-  },
-  getPostContent:function(id,cb){
-    var url='./datas/post_'+id+'.html';
-    this._get(url,function(res){
-      cb(res);
-    })
-  },
-  getTDetails:function(id,cb,err){
-    var url='./datas/t_'+id+'.json';
-    this._get(url,function(res){
-      cb(JSON.parse(res));
-    },err)
-  },
-  getTContent:function(id,cb){
-    var url='./datas/t_'+id+'.html';
-    this._get(url,function(res){
-      cb(res);
-    })
-  },
-  getCount:function(cb){
-    var url='./datas/count.json';
-    this._get(url,function(res){
-      cb(JSON.parse(res));
+    resize();
+    window.onresize = function () {
+        resize();
+    }
+}
+
+var loadingHtml='<div class="loading"><span></span><span></span><span></span></div>';
+
+var blog = {
+    _get: function (url, cb, err = function () { }) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                cb(xhr.responseText);
+            }
+            if (xhr.status > 400) {
+                err(xhr.status);
+            }
+        }
+        xhr.send();
+    },
+    getPostListByPage: function (page, cb, err) {
+        var url = './datas/post_comment_' + page + '.json';
+        this._get(url, function (res) {
+            cb(JSON.parse(res));
+        }, err)
+    },
+    getPostListByTag: function (tag, cb, err) {
+        var url = './datas/tag_' + tag + '.json';
+        this._get(url, function (res) {
+            cb(JSON.parse(res));
+        }, err)
+    },
+    getAllPostList: function (cb, err) {
+        var url = './datas/all_posts.json';
+        this._get(url, function (res) {
+            cb(JSON.parse(res));
+        }, err)
+    },
+    getTagList: function (cb, err) {
+        var url = './datas/tags.json';
+        this._get(url, function (res) {
+            cb(JSON.parse(res));
+        }, err)
+    },
+    getPostContent: function (id, cb, err) {
+        var url = './datas/post_' + id + '.json';
+        this._get(url, function (res) {
+            cb(JSON.parse(res));
+        }, err)
+    },
+    getCount: function (cb, err) {
+        var url = './datas/count.json';
+        this._get(url, function (res) {
+            cb(JSON.parse(res));
+        }, err);
+    }
+}
+
+/**
+ * @return {HTMLElement}
+ */
+function $(selector) {
+    return document.querySelector(selector);
+}
+function $$(selector) {
+    return document.querySelectorAll(selector);
+}
+
+function gtag(tags) {
+    var tstr = '';
+    tags.forEach(function (tag) {
+        tstr += '<a href="#/tag/' + tag + '">' + tag + '</a>';
     });
-  }
+    return tstr;
 }
+var initef=false;
+var initer = {
+    index: function (i, page) {
+        document.title = '陈思全的博客 - 首页';
+        page.querySelector("ul.postlist").innerHTML = loadingHtml;
+        page.querySelector('.btn.next').style.display = 'block';
+        page.querySelector('.btn.prev').style.display = 'block';
 
-var sTate={};
+        if (isNaN(parseInt(i)) || parseInt(i) < 0) {
+            i = 0;
+        } else {
+            i = parseInt(i);
+        }
 
-var hashTokenize=[
-  {
-    reg:/^(#\/|#\/index|#\/index\/)$/,
-    page:"home",
-    cb:function(){
-      if(!sTate.home){
-        sTate.home={
-          ipage:0,
-          state:'loading'
-        };
-        load(0);
-      }
-      document.querySelector(".page.home .stated .more span").onclick=function(){
-        sTate.home.ipage++;
-        sTate.home.state='loading';
-        load(sTate.home.ipage);
-      }
-      function load(i){
-        document.querySelector('.page.home .stated').className='stated loading';
-        blog.getPostListByPage(i,function(pl){
-          var htmlstr='';
-          pl.data.forEach(function(l){
-            htmlstr+='<li>\
-            <h1><a href="#/post/'+l.id+'">'+l.title+'</a></h1>\
-            <p class="desc">'+l.desc+'...<a href="#/post/'+l.id+'">阅读全文</a></p>\
-            <div class="message"><div class="tags">'+(function(tags){
-              var tstr='';
-              tags.forEach(function(tag){
-                tstr+='<a href="#/tag/'+tag+'">'+tag+'</a>';
-              });
-              return tstr;
-            })(l.tags)+'</div><div class="date">'+new Date(l.time.substring(0,l.time.length-2)+'+0800').toLocaleString()+'</div></div>\
-            </li>';
-          })
-          document.querySelector(".page.home ul.postlist").innerHTML+=htmlstr;
-          sTate.home.state='loaded';
-          if((i+1)*10>=pl.total){
-            document.querySelector('.page.home .stated').className='stated nomore';
-          }else{
-            document.querySelector('.page.home .stated').className='stated more';
-          }
-        })
-      }
-    }
-  },
-  {
-    reg:/^#\/post(\/|)$/,
-    page:"home",
-    cb:function(){
-      window.location.hash='#/'
-    }
-  },
-  {
-    reg:/^#\/t(\/|)$/,
-    page:"t",
-    cb:function(){
-        if(!sTate.t){
-          sTate.t={
-            ipage:0,
-            state:'loading'
-          };
-          load(0);
+        page.querySelector('.btn.prev').onclick = function () {
+            i--;
+            location.hash = 'index/' + i;
         }
-        document.querySelector(".page.t .stated .more span").onclick=function(){
-          sTate.t.ipage++;
-          sTate.t.state='loading';
-          load(sTate.t.ipage);
+        page.querySelector('.btn.next').onclick = function () {
+            i++;
+            location.hash = 'index/' + i;
         }
-        function load(i){
-          blog.getTListByPage(i,function(pl){
-            var htmlstr='';
-            pl.data.forEach(function(l){
-              htmlstr+='<li>\
-              <div class="ttc markdown-body">'+l.desc+'......<a href="#/t/'+l.id+'">阅读全文</a></div>\
-              <div class="date">'+new Date(l.time.substring(0,l.time.length-2)+'+0800').toLocaleString()+'</div></div>\
-              </li>';
+
+        page.querySelector('span.total').innerHTML = -1;
+        page.querySelector('span.current').innerHTML = i + 1;
+
+        blog.getPostListByPage(i, function (pl) {
+            var htmlstr = '';
+            pl.data.forEach(function (l) {
+                htmlstr += `<li>
+                    <h1><a href="#/post/${l.id}">${l.title}</a></h1>
+                    <p class="desc">${l.desc}...<a href="#/post/'+l.id+'">阅读全文</a></p>
+                    <div class="message">
+                        <div class="tags">${gtag(l.tags)}</div>
+                        <div class="date">${new Date(l.time.substring(0, l.time.length - 2) + '+0800').toLocaleString()}</div>
+                    </div>
+                </li>`;
             })
-            document.querySelector(".page.t ul.tlist").innerHTML+=htmlstr;
-            sTate.t.state='loaded';
-          if((i+1)*10>=pl.total){
-            document.querySelector('.page.t .stated').className='stated nomore';
-          }else{
-            document.querySelector('.page.t .stated').className='stated more';
-          }
-          })
-        }
+            page.querySelector("ul.postlist").innerHTML = htmlstr;
 
-    }
-  },
-  {
-    reg:/^#\/t\/.+/,
-    page:"tc",
-    cb:function(){
-      var id=window.location.hash.substring(4);
-      id=id.split('');
-      id=id.map(function(v){
-        return v=='/'?'':v;
-      });
-      id=id.join('');
-      if(!sTate.tc){
-        sTate.tc={
-          id:id,
-          state:[0,0]
-        }
-        ref();
-        load(id);
-      }else{
-        if(id!=sTate.tc.id){
-          sTate.tc.id=id;
-          ref();
-          load(id);
-        }
-      }
+            var total = pl.total;
+            page.querySelector('span.total').innerHTML = total;
+            page.querySelector('span.current').innerHTML = i + 1;
+            if (i + 1 >= total) {
+                page.querySelector('.btn.next').style.display = 'none';
+            }
 
-      function ref(){
-        document.querySelector(".page.tc>.date .date_con").innerHTML='';
-        document.querySelector(".page.tc>.t-content").innerHTML='<div class="loading"><span></span><span></span><span></span></div>';
-      }
+            if (i <= 0) {
+                page.querySelector('.btn.prev').style.display = 'none';
+            }
+        }, function (status) {
+            $('.error-page').style.display = 'block';
+            $('.error-page .error-title').innerHTML = status;
+        })
 
-      function load(id){
-        blog.getTContent(id,function(res){
-          if(sTate.tc.id==id){
-            document.querySelector(".page.tc>.t-content").innerHTML=res;
-          }
+
+    },
+    category: function (i, page) {
+        document.title = '陈思全的博客 - 分类';
+        function getRandomColor() {
+            var letters = '0123456789';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 10)];
+            }
+            return color;
+        }
+        page.querySelector("ul.categorylist").innerHTML = loadingHtml;
+
+        blog.getTagList(function (tl) {
+            var htmlstr = '';
+            tl.forEach(function (l) {
+                htmlstr += `<li data-tag="${l}" style="background-color:${getRandomColor()}"># <span>${l}</span></li>`;
+            })
+            page.querySelector("ul.categorylist").innerHTML = htmlstr;
+            page.querySelectorAll("ul.categorylist li").forEach(function (item) {
+                item.onclick = function () {
+                    location.hash = 'tag/' + item.getAttribute('data-tag');
+                }
+            })
+        }, function (status) {
+            $('.error-page').style.display = 'block';
+            $('.error-page .error-title').innerHTML = status;
+        })
+    },
+    friends: function (i, page) {
+        document.title = '陈思全的博客 - 友链';
+        if (initef) return;
+        initef = true;
+        $('.friendlinks').innerHTML = loadingHtml;
+        blog._get('https://siquan001.github.io/friendlink.json', function (res) {
+            var data = JSON.parse(res);
+            var str = '';
+            data.forEach(function (item) {
+                str += '<li><a ' + (item.type == '?' ? 'class="no" title="链接可能无法访问"' : '') + ' href="' + item.url + '" target="_blank"><img src="' + item.icon + '"/><div class="m"><div class="title">' + item.title + '</div><div class="desc">' + item.desc + '</div></div></a></li>';
+            });
+            $('.friendlinks').innerHTML = str;
+        })
+    },
+    archive: function (i, page) {
+        document.title = '陈思全的博客 - 归档';
+        page.querySelector("ul.archivelist").innerHTML = loadingHtml;
+        blog.getAllPostList(function (pl) {
+            var htmlstr = '';
+            pl.forEach(function (item) {
+                htmlstr += `<li><div class="title"><a href="#/post/${item.id}">${item.title}</a></div><div class="date">${item.time}</div></li>`
+            })
+
+            page.querySelector("ul.archivelist").innerHTML = htmlstr;
+        })
+    },
+    tag: function (i, page) {
+        document.title = decodeURI(i) + ' 分类';
+        page.querySelector("ul.postlist").innerHTML = loadingHtml;
+        page.querySelector('.tag-title span').innerText = decodeURI(i);
+        blog.getPostListByTag(i, function (pl) {
+            var htmlstr = '';
+            pl.forEach(function (l) {
+                htmlstr += `<li>
+                    <h1><a href="#/post/${l.id}">${l.title}</a></h1>
+                    <p class="desc">${l.desc}...<a href="#/post/'+l.id+'">阅读全文</a></p>
+                    <div class="message">
+                        <div class="tags">${gtag(l.tags)}</div>
+                        <div class="date">${new Date(l.time.substring(0, l.time.length - 2) + '+0800').toLocaleString()}</div>
+                    </div>
+                </li>`;
+            })
+            page.querySelector("ul.postlist").innerHTML = htmlstr;
+        }, function (status) {
+            $('.error-page').style.display = 'block';
+            $('.error-page .error-title').innerHTML = status;
+        })
+    },
+    post: function (i, page) {
+        page.querySelector('.post-title').innerText = '';
+        page.querySelector('.post-date').innerText = '';
+        page.querySelector('.post-tags').innerHTML = '';
+        page.querySelector('.post-content').innerHTML = loadingHtml;
+        page.querySelector('.post-container').style.display = 'block';
+        blog.getPostContent(i, function (p) {
+            page.querySelector('.post-title').innerText = p.detail.title;
+            page.querySelector('.post-date').innerText = p.detail.time;
+            page.querySelector('.post-tags').innerHTML = gtag(p.detail.tags);
+            page.querySelector('.post-content').innerHTML = p.html;
+            document.title = p.detail.title;
+        }, function (status) {
+            $('.error-page').style.display = 'block';
+            $('.error-page .error-title').innerHTML = status;
+            page.querySelector('.post-container').style.display = 'none';
         });
-        blog.getTDetails(id,function(res){
-          if(sTate.tc.id==id){
-            document.querySelector(".page.tc>.date .date_con").innerHTML=new Date(res.time.substring(0,res.time.length-2)+'+0800').toLocaleString();
-          }
-        },function(){
-          document.querySelectorAll(".page").forEach(function(a){
-            a.style.display='';
-          })
-          document.querySelector(".page.a404").style.display='block';
-
-        })
-      }
     }
-  }, 
-  {
-    reg:/^#\/tag(\/|)$/,
-    page:"tag",
-    cb:function(){
-      if(!sTate.tag){
-        sTate.tag=true;
-        var tagul=document.querySelector(".page.tag ul.taglist");
-        tagul.innerHTML='<div class="loading"><span></span><span></span><span></span></div>'
-        blog.getTagList(function(tags){
-          var str='';
-          tags.forEach(function(tag){
-            str+='<li><a href="#/tag/'+tag+'">'+tag+'</a></li>';
-          })
-          tagul.innerHTML=str;
-        })
-      }
-    }
-  },
-  {
-    reg:/^#\/post\/.+/,
-    page:"post",
-    cb:function(){
-      var id=window.location.hash.substring(7);
-      id=id.split('');
-      id=id.map(function(v){
-        return v=='/'?'':v;
-      });
-      id=id.join('');
-      if(!sTate.post){
-        sTate.post={
-          id:id,
-          state:[0,0]
-        }
-        ref();
-        load(id);
-      }else{
-        if(id!=sTate.post.id){
-          sTate.post.id=id;
-          ref();
-          load(id);
-        }
-      }
+}
 
-      function ref(){
-        document.querySelector(".page.post>h1").innerHTML='<div class="loading"><span></span><span></span><span></span></div>';
-        document.querySelector(".page.post>.tags .tag_con").innerHTML='';
-        document.querySelector(".page.post>.date .date_con").innerHTML='';
-        document.querySelector(".page.post>.post-content").innerHTML='<div class="loading"><span></span><span></span><span></span></div>';
-      }
-
-      function load(id){
-        blog.getPostContent(id,function(res){
-          if(sTate.post.id==id){
-            document.querySelector(".page.post>.post-content").innerHTML=res;
-          }
+function initRouter() {
+    function _(item) {
+        item.addEventListener("click", function () {
+            if (item.getAttribute("data-to"))
+                window.location.hash = item.getAttribute("data-to");
+            else if (item.getAttribute("data-link"))
+                window.open(item.getAttribute("data-link"));
         });
-        blog.getPostDetails(id,function(res){
-          if(sTate.post.id==id){
-            document.querySelector(".page.post>h1").innerHTML=res.title;
-            document.querySelector(".page.post>.tags .tag_con").innerHTML=(function(tags){
-              var tstr='';
-              tags.forEach(function(tag){
-                tstr+='<a href="#/tag/'+tag+'">'+tag+'</a>';
-              });
-              return tstr;
-            })(res.tags);
-            document.querySelector(".page.post>.date .date_con").innerHTML=new Date(res.time.substring(0,res.time.length-2)+'+0800').toLocaleString();
-          }
-        },function(d){
-          sTate.post=null;
-          document.querySelectorAll(".page").forEach(function(a){
-            a.style.display='';
-          })
-          document.querySelector(".page.a404").style.display='block';
-        })
-      }
     }
-  }, 
-  {
-    reg:/^#\/friends(\/|)$/,
-    page:"friends",
-    cb:function(){
-      if(!sTate.friends){
-        sTate.friends=true;
-        blog._get('https://siquan001.github.io/friendlink.json',function(res){
-          var data=JSON.parse(res);
-          var str='';
-          data.forEach(function(item){
-            str+='<li><a '+(item.type=='?'?'class="no" title="链接可能无法访问"':'')+' href="'+item.url+'" target="_blank"><img src="'+item.icon+'"/><div class="m"><div class="title">'+item.title+'</div><div class="desc">'+item.desc+'</div></div></a></li>';
-          });
-          document.querySelector('.friendlinks').innerHTML=str;
-        })
-      }
-    }
-  }, 
-  {
-    reg:/^#\/archive(\/|)$/,
-    page:"archive",
-    cb:function(){
-      if(!sTate.archive){
-        sTate.archive=true;
-        blog.getAllPostList(function(res){
-          var ul=document.querySelector(".page.archive ul");
-          var str='';
-          res.forEach(function(l){
-            str+='<li><div class="title"><a href="#/post/'+l.id+'">'+l.title+'</a></div><div class="date">'+new Date(l.time.substring(0,l.time.length-2)+'+0800').toLocaleString()+'</div></li>';
-          });
-          ul.innerHTML=str;
-        })
-      }
-    }
-  },
-  {
-    reg:/^#\/tag\/.+/,
-    page:"tagc",
-    cb:function(){
-      var tag=window.location.hash.substring(6);
-      if(!sTate.tagc){
-        sTate.tagc={
-          tag:tag,
-          state:'loading'
-        };
-        load(tag);
-      }else{
-        if(sTate.tagc.tag!=tag){
-          var ul=document.querySelector(".page.tagc ul");
-          ul.innerHTML='';
-          load(tag);
-        }
-      }
-      function load(tag){
-        document.querySelector(".page.tagc h1 .tagname").innerHTML=decodeURI(tag);
-        blog.getPostListByTag(tag,function(res){
-          var ul=document.querySelector(".page.tagc ul");
-          var str='';
-          res.forEach(function(l){
-            str+='<li>\
-            <h1><a href="#/post/'+l.id+'">'+l.title+'</a></h1>\
-            <p class="desc">'+l.desc+'...<a href="#/post/'+l.id+'">阅读全文</a></p>\
-            <div class="message"><div class="tags">'+(function(tags){
-              var tstr='';
-              tags.forEach(function(tag){
-                tstr+='<a href="#/tag/'+tag+'">'+tag+'</a>';
-              });
-              return tstr;
-            })(l.tags)+'</div><div class="date">'+new Date(l.time.substring(0,l.time.length-2)+'+0800').toLocaleString()+'</div></div>\
-            </li>';
-          });
-          ul.innerHTML=str;
-        })
-      }
-    }
-  }
-];
+    $$(".container .menu .item").forEach(_);
+    $$(".container .mobmenu .item").forEach(_);
 
-function clhash(){
-  window.scrollTo(0,0);
-  if(window.location.hash==''){
-    location.hash='#/';
-    return;
-  }
-  var ab=false;
-  for(var i=0;i<hashTokenize.length;i++){
-    var token=hashTokenize[i];
-    if(token.reg.test(window.location.hash)){
-      var page=token.page;
-      document.querySelectorAll(".page").forEach(function(a){
-        a.style.display='';
-      })
-      document.querySelector(".page."+page).style.display='block';
-      document.querySelectorAll(".nav .menu li").forEach(function(li){
-        if(li.dataset.p==page){
-          li.classList.add("active");
-        }else{
-          li.classList.remove("active");
+    window.onhashchange = clhash;
+    function clhash() {
+        $('.error-page').style.display = 'none';
+        var hash = window.location.hash.slice(1);
+        var hash_ = [];
+        if (hash[0] == '/') {
+            hash = hash.slice(1);
         }
-      })
-      document.querySelectorAll(".mobmenu li").forEach(function(li){
-        if(li.dataset.p==page){
-          li.classList.add("active");
-        }else{
-          li.classList.remove("active");
+        if (hash.indexOf('/') != -1) {
+            var hashsp = hash.indexOf('/');
+            hash_ = [hash.slice(0, hashsp), hash.slice(hashsp + 1)];
+        } else {
+            hash_ = [hash];
         }
-      })
-      var cb=token.cb;
-      cb();
-      ab=true;
-      break;
+        console.log(hash_);
+        if (initer[hash_[0]]) {
+            var page = $(".container .c .page[data-page='" + hash_[0] + "']");
+            $$(".container .c .page").forEach(function (item) {
+                item.classList.remove("act");
+            });
+            page.classList.add("act");
+            initer[hash_[0]](hash_[1], page);
+        }else if(hash_[0]=='err'){
+            $('.error-page').style.display = 'block';
+            $('.error-page .error-title').innerText = hash_[1];
+        } else {
+            window.location.hash = "#index";
+            return;
+        }
+
+        $('.container .c .content').scrollTo({
+            top: 0,
+            behavior: "smooth"
+        })
+        function __(item) {
+            if (item.getAttribute("data-to") == hash) {
+                item.classList.add("act");
+            } else {
+                item.classList.remove("act");
+            }
+        }
+        $$(".container .menu .item").forEach(__);
+        $$(".container .mobmenu .item").forEach(__);
     }
-  }
-  if(!ab){
-    document.querySelector(".page.a404").style.display='block';
-  }
+    clhash();
 }
 
-window.onhashchange=clhash;
-clhash();
+resizeWindow();
+initRouter();
 
-document.querySelector(".menubtn").onclick=function(){
-  document.querySelector(".mobmenu").classList.add('show');
+document.querySelector(".menubtn").onclick = function () {
+    document.querySelector(".mobmenu").classList.add('show');
 }
-document.querySelector(".mobmenu").onclick=function(){
-  this.classList.remove('show');
+document.querySelector(".mobmenu").onclick = function () {
+    this.classList.remove('show');
 }
 
-blog.getCount(function(res){
-  document.querySelector(".postcount").innerHTML=res.post;
-  document.querySelector(".tcount").innerHTML=res.t;
-  document.querySelector(".tagcount").innerHTML=res.tag;
+blog.getCount(function (res) {
+    $(".tagcount").innerHTML = res.tag;
+    $(".postcount").innerHTML = res.post;
 })
