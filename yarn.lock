@@ -84,16 +84,6 @@ js-yaml@^4.1.0:
   dependencies:
     argparse "^2.0.1"
 
-marked-highlight@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.npmjs.org/marked-highlight/-/marked-highlight-2.1.1.tgz"
-  integrity sha512-ktdqwtBne8rim5mb+vvZ9FzElGFb+CHCgkx/g6DSzTjaSrVnxsJdSzB5YgCkknFrcOW+viocM1lGyIjC0oa3fg==
-
-marked@^12.0.1, "marked@>=4 <13":
-  version "12.0.1"
-  resolved "https://registry.npmjs.org/marked/-/marked-12.0.1.tgz"
-  integrity sha512-Y1/V2yafOcOdWQCX0XpAKXzDakPOpn6U0YLxTJs3cww6VxOzZV1BTOOYWLvH3gX38cq+iLwljHHTnMtlDfg01Q==
-
 minimatch@^3.1.1:
   version "3.1.2"
   resolved "https://registry.npmmirror.com/minimatch/-/minimatch-3.1.2.tgz"
