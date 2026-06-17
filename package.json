@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "highlight.js": "^11.8.0",
-    "js-yaml": "^4.1.0",
-    "shelljs": "^0.8.5"
-  }
-}

@@ -5,172 +5,121 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>雨竹upon的博客</title>
-    <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="markdown.css">
+    <title>雨竹upon的小博客</title>
+    <link rel="stylesheet" href="./lib/index.css">
 </head>
 
 <body>
-    <!-- <div class="bg">
-        <img src="https://loliapi.com/acg/" alt="">
-    </div> -->
-    <div class="container">
-        <nav>
-            <div class="logo">
-                <img src="./favicon.ico" alt="">
-                <p>雨竹upon的博客</p>
-            </div>
-            <div class="menu">
-                <div class="item" data-to="index">首页</div>
-                <div class="item" data-to="category">分类</div>
-                <div class="item" data-to="archive">归档</div>
-                <div class="item" data-to="friends">友链</div>
-                <div class="item" data-link="/">关于我</div>
-            </div>
-            <div class="menubtn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
+    <nav>
+        <ul>
+            <li><a href="#/">首页</a></li>
+            <li>·</li>
+            <li><a href="#/tags">分类</a></li>
+            <li>·</li>
+            <li><a href="#/archive">归档</a></li>
+            <li>·</li>
+            <li><a href="#/friends">友链</a></li>
+            <li>·</li>
+            <li><a href="/">关于</a></li>
+        </ul>
+        <ul class="r">
+            <li><a href="https://space.bilibili.com/1818866063/" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 512 512">
+                        <path fill="currentColor"
+                            d="M488.6 104.1c16.7 18.1 24.4 39.7 23.3 65.7v202.4c-.4 26.4-9.2 48.1-26.5 65.1c-17.2 17-39.1 25.9-65.5 26.7H92.02c-26.45-.8-48.21-9.8-65.28-27.2C9.682 419.4.767 396.5 0 368.2V169.8c.767-26 9.682-47.6 26.74-65.7C43.81 87.75 65.57 78.77 92.02 78h29.38L96.05 52.19c-5.75-5.73-8.63-13-8.63-21.79c0-8.8 2.88-16.06 8.63-21.797C101.8 2.868 109.1 0 117.9 0q13.2 0 21.9 8.603L213.1 78h88l74.5-69.397C381.7 2.868 389.2 0 398 0q13.2 0 21.9 8.603c5.7 5.737 8.6 12.997 8.6 21.797c0 8.79-2.9 16.06-8.6 21.79L394.6 78h29.3c26.4.77 48 9.75 64.7 26.1m-38.8 69.7c-.4-9.6-3.7-17.4-10.7-23.5c-5.2-6.1-14-9.4-22.7-9.8H96.05c-9.59.4-17.45 3.7-23.58 9.8c-6.14 6.1-9.4 13.9-9.78 23.5v194.4c0 9.2 3.26 17 9.78 23.5s14.38 9.8 23.58 9.8H416.4c9.2 0 17-3.3 23.3-9.8s9.7-14.3 10.1-23.5zm-264.3 42.7c6.3 6.3 9.7 14.1 10.1 23.2V273c-.4 9.2-3.7 16.9-9.8 23.2c-6.2 6.3-14 9.5-23.6 9.5s-17.5-3.2-23.6-9.5s-9.4-14-9.8-23.2v-33.3c.4-9.1 3.8-16.9 10.1-23.2s13.2-9.6 23.3-10c9.2.4 17 3.7 23.3 10m191.5 0c6.3 6.3 9.7 14.1 10.1 23.2V273c-.4 9.2-3.7 16.9-9.8 23.2s-14 9.5-23.6 9.5s-17.4-3.2-23.6-9.5c-7-6.3-9.4-14-9.7-23.2v-33.3c.3-9.1 3.7-16.9 10-23.2s14.1-9.6 23.3-10c9.2.4 17 3.7 23.3 10" />
+                    </svg>
+                </a></li>
+            <li><a href="https://github.com/siquan001/" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24">
+                        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2">
+                            <path stroke-dasharray="32"
+                                d="M12 4c1.67 0 2.61 0.4 3 0.5c0.53 -0.43 1.94 -1.5 3.5 -1.5c0.34 1 0.29 2.22 0 3c0.75 1 1 2 1 3.5c0 2.19 -0.48 3.58 -1.5 4.5c-1.02 0.92 -2.11 1.37 -3.5 1.5c0.65 0.54 0.5 1.87 0.5 2.5c0 0.73 0 3 0 3M12 4c-1.67 0 -2.61 0.4 -3 0.5c-0.53 -0.43 -1.94 -1.5 -3.5 -1.5c-0.34 1 -0.29 2.22 0 3c-0.75 1 -1 2 -1 3.5c0 2.19 0.48 3.58 1.5 4.5c1.02 0.92 2.11 1.37 3.5 1.5c-0.65 0.54 -0.5 1.87 -0.5 2.5c0 0.73 0 3 0 3">
+                                <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="32;0" />
+                            </path>
+                            <path stroke-dasharray="10" stroke-dashoffset="10"
+                                d="M9 19c-1.41 0 -2.84 -0.56 -3.69 -1.19c-0.84 -0.63 -1.09 -1.66 -2.31 -2.31">
+                                <animate fill="freeze" attributeName="stroke-dashoffset" begin="0.7s" dur="0.2s"
+                                    to="0" />
+                            </path>
+                        </g>
+                    </svg>
+                </a></li>
+            <li class="showmenu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24">
+                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" d="M4 5h16M4 12h16M4 19h16" />
                 </svg>
-              </div>
-        </nav>
-        <div class="mobmenu">
-            <ul>
-                <li><div class="item" data-to="index">首页</div></li>
-                <li><div class="item" data-to="category">分类</div></li>
-                <li><div class="item" data-to="archive">归档</div></li>
-                <li><div class="item" data-to="friends">友链</div></li>
-                <li><div class="item" data-link="/">关于我</div></li>
-            </ul>
+            </li>
+        </ul>
+    </nav>
+    <div class="intro">
+        <img src="https://t.alcy.cc/moez" alt="">
+        <div class="card">
+            <h1>雨竹upon的小博客</h1>
+            <div class="saying">海内存知己，天涯若比邻。</div>
         </div>
-        <div class="c">
-            <div class="content">
-                <div class="error-page">
-                    <div class="error-title">404</div>
-                    <div class="error-desc">页面获取失败，请检查链接是否正确。</div>
-                    <a href="/" class="btn">回到首页</a>
-                    <a href="javascript:location.reload()" class="btn">重新加载</a>
-                </div>
-                <div class="page" data-page="index">
-                    <ul class="postlist"></ul>
-                    <div class="page-switch">
-                        <div class="btn prev">上一页</div>
-                        <div class="center-txt"><span class="current">1</span>/<span class="total">10</span></div>
-                        <div class="btn next">下一页</div>
-                    </div>
-                </div>
-                <div class="page" data-page="category">
-                    <h1>文章分类</h1>
-                    <ul class="categorylist"></ul>
-                </div>
-                <div class="page" data-page="archive">
-                    <h1>文章归档</h1>
-                    <ul class="archivelist"></ul>
-                </div>
-                <div class="page" data-page="friends">
-                    <h1>我的小伙伴们</h1>
-                    <ul class="friendlinks"></ul>
-                </div>
-                <div class="page" data-page="post">
-                    <div class="post-container">
-                        <div class="post-title"></div>
-                        <div class="post-meta">
-                            <p class="post-date"></p>
-                            <div class="post-tags"></div>
-                        </div>
-                        <div class="post-content"></div>
-                        <div class="end">—— End ——</div>
-                    </div>
-                    
-                </div>
-                <div class="page" data-page="tag">
-                    <h2 class="tag-title"><span></span> 分类：</h2>
-                    <ul class="postlist"></ul>
-                </div>
-                <div class="footer">
-                    <div class="i">
-                      <div class="t">关于本站</div>
-                      <div class="c nt">这是一个无聊的人无聊的时候搭建的无聊的博客，由雨竹upon自主研发博客引擎siquan-blog驱动，有什么问题可以联系我</div>
-                    </div>
-                    <div class="i">
-                      <div class="t">联系我</div>
-                      <div class="c">
-                        <div class="m">QQ : 2167967783</div>
-                        <div class="m">Email1: chensiquan2022@163.com</div>
-                        <div class="m">Email2: 2167967783@qq.com</div>
-                        <div class="m">Github : <a href="https://github.com/siquan001" target="_blank" rel="noopener noreferrer">siquan001</a></div>
-                        <div class="m">哔哩哔哩 : <a href="https://space.bilibili.com/1818866063/" target="_blank" rel="noopener noreferrer">雨竹upon</a></div>
-                      </div>
-                    </div>
-                    <div class="i">
-                      <div class="t">我的小伙伴们</div>
-                      <div class="c">
-                        <a href="#/friends">去我的小伙伴们那儿逛逛吧~</a>
-                      </div>
-                    </div>
-                    <div class="moebeian">
-                        <script>
-                            if(window.location.href.indexOf('siquan001.github.io')!=-1){
-                                document.write('<span class="mbn">© 2024 <a href="https://siquan001.github.io/">雨竹upon</a>  版权所有 |</span><a href="https://icp.gov.moe/?keyword=20240945" target="_blank">萌ICP备20240945号</a>')
-                            }else if(window.location.href.indexOf('siquan.42web.io')!=-1){
-                                document.write('<span class="mbn">© 2024 <a href="https://siquan001.github.io/">雨竹upon</a>  版权所有 |</span><a href="https://icp.gov.moe/?keyword=20240954" target="_blank">萌ICP备20240954号</a>')
-                            }else{
-                                document.write('<span class="mbn">你可能在访问盗版网站！<a href="https://siquan001.github.io/">回到主站</a></span>')
-                            }
-                        </script>
-                        
-                    </div>
-                  </div>
-            </div>
-            <div class="rightbar">
-                <div class="mycard">
-                    <img src="./favicon.ico" alt="">
-                    <p class="name">雨竹upon</p>
-                    <p class="says">海内存知己，天涯若比邻</p>
-                    <div class="counts">
-                        <div class="item">
-                            <div class="count-title">文章</div>
-                            <div class="count-num postcount">9</div>
-                        </div>
-                        <div class="item">
-                            <div class="count-title">标签</div>
-                            <div class="count-num tagcount">9</div>
-                        </div>
-                    </div>
-                    <div class="socials">
-                        <div class="item">
-                            <a href="https://github.com/siquan001" target="_blank" rel="noopener noreferrer">
-                                <img src="https://image.gmya.net/i/2023/10/21/653377c248932.ico" alt="">
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="https://user.qzone.qq.com/2167967783/" target="_blank" rel="noopener noreferrer">
-                                <img src="https://image.gmya.net/i/2023/10/21/653377c416ce5.ico" alt="">
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="https://space.bilibili.com/1818866063/" target="_blank" rel="noopener noreferrer">
-                                <img src="https://image.gmya.net/i/2023/10/21/653377c526a6f.ico" alt="">
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="mailto:chensiquan2022@qq.com" onclick="alert('我的邮箱：chensiquan2023@qq.com')"
-                                rel="noopener noreferrer">
-                                <img src="https://image.gmya.net/i/2023/10/21/653378560f717.png" alt="">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="noticecard">
-                    <div class="title">📢 公告</div>
-                    <div class="ct">
-                        由于学业原因，本站更新随缘。
-                    </div>
-                </div>
-            </div>
+        <div class="xiahua">
+            <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6l-6-6z" />
+            </svg>
         </div>
-
     </div>
-    <script src="index.js"></script>
+    <div class="container">
+        <div class="content">
+
+        </div>
+        <div class="profile">
+            <img src="./lib/avatar.jpg" alt="">
+            <div class="name">雨竹upon</div>
+            <div class="slogan">海内存知己，天涯若比邻。</div>
+        </div>
+        <div class="fc"></div>
+    </div>
+
+    <div class="footer">
+        <img src="https://t.alcy.cc/moez?_t=1" alt="">
+        <div class="f">
+            <div class="i">
+                <div class="t">关于本站</div>
+                <div class="c nt">这是一个无聊的人无聊的时候搭建的无聊的博客，由雨竹upon自主研发博客引擎SIBlog驱动，有什么问题可以联系我</div>
+            </div>
+            <div class="i">
+                <div class="t">联系我</div>
+                <div class="c">
+                    <div class="m">QQ : 2167967783</div>
+                    <div class="m">Email1: chensiquan2022@163.com</div>
+                    <div class="m">Email2: 2167967783@qq.com</div>
+                    <div class="m">Github : <a href="https://github.com/siquan001" target="_blank"
+                            rel="noopener noreferrer">siquan001</a></div>
+                    <div class="m">哔哩哔哩 : <a href="https://space.bilibili.com/1818866063/" target="_blank"
+                            rel="noopener noreferrer">雨竹upon</a></div>
+                </div>
+            </div>
+            <div class="i">
+                <div class="t">我的小伙伴们</div>
+                <div class="c">
+                    <a href="#/friends">去我的小伙伴们那儿逛逛吧~</a>
+                </div>
+            </div>
+            <div class="moebeian">
+                <script>
+                    if (window.location.href.indexOf('siquan001.github.io') != -1) {
+                        document.write('<span class="mbn">© 2024 <a href="https://siquan001.github.io/">雨竹upon</a>  版权所有 |</span><a href="https://icp.gov.moe/?keyword=20240945" target="_blank">萌ICP备20240945号</a>')
+                    } else if (window.location.href.indexOf('siquan.42web.io') != -1) {
+                        document.write('<span class="mbn">© 2024 <a href="https://siquan001.github.io/">雨竹upon</a>  版权所有 |</span><a href="https://icp.gov.moe/?keyword=20240954" target="_blank">萌ICP备20240954号</a>')
+                    } else {
+                        document.write('<span class="mbn">你可能在访问盗版网站！<a href="https://siquan001.github.io/">回到主站</a></span>')
+                    }
+                </script>
+
+            </div>
+
+        </div>
+    </div>
+    <script src="./util/qui-core.js"></script>
+    <script src="./util/adapter.js"></script>
+    <script src="./lib/index.js"></script>
 </body>
 
 </html>
