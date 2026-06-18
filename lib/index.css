@@ -121,6 +121,15 @@ nav a{
     padding: 10px;
     font-weight: 300;
     color: #eee;
+    vertical-align: middle;
+}
+.intro .saying::before{
+    color: #fff;
+    content:"·";
+}
+.intro .saying::after{
+    color: #fff;
+    content:"·";
 }
 
 .container{
@@ -486,4 +495,10 @@ nav a{
     .showmenu{
         display: block;
     }
+}
+
+img.loading{
+    width: 50%;
+    margin: 10px auto;
+    display: block;
 }

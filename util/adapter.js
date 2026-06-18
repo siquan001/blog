@@ -17,6 +17,7 @@ const Adapter={
         const res = await fetch(this.distDir+"/"+url);
         const r=await res.json();
         this.cacheResult.gS[url] = r;
+        await new Promise(r=>setTimeout(r,3000));
         return clone(r);
     },
     async getPostList(){
